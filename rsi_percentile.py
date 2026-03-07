@@ -1,5 +1,5 @@
 """
-Calculates 14-day RSI
+Calculates 14-day RSI (sciclaw)
 
 Version 20260307
 
