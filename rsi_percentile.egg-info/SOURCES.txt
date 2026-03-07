@@ -1,0 +1,10 @@
+LICENSE
+README.md
+pyproject.toml
+rsi_percentile.py
+rsi_percentile.egg-info/PKG-INFO
+rsi_percentile.egg-info/SOURCES.txt
+rsi_percentile.egg-info/dependency_links.txt
+rsi_percentile.egg-info/entry_points.txt
+rsi_percentile.egg-info/requires.txt
+rsi_percentile.egg-info/top_level.txt

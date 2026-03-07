@@ -1,0 +1,2 @@
+[console_scripts]
+rsi-percentile = rsi_percentile:main

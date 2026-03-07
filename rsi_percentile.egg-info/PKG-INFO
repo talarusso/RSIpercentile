@@ -1,3 +1,16 @@
+Metadata-Version: 2.4
+Name: rsi-percentile
+Version: 0.1.0
+Summary: RSI percentile calculator for stock analysis
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: yfinance
+Requires-Dist: pandas
+Requires-Dist: curl_cffi
+Requires-Dist: ta
+Dynamic: license-file
+
 # RSI Percentile Calculator
 
 This project downloads stock price data from Yahoo Finance and calculates RSI percentile thresholds.

@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rsi-percentile"
+version = "0.1.0"
+description = "RSI percentile calculator for stock analysis"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "yfinance",
+    "pandas",
+    "curl_cffi",
+    "ta"
+]
+
+[project.scripts]
+rsi-percentile = "rsi_percentile:main"
