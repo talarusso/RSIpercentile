@@ -71,8 +71,8 @@ def main(argv=None):
 
     current_rsi, current_percentile, percentiles = get_rsi_percentiles(symbol)
 
-    print(f"{symbol} RSI (14d): {current_rsi:.2f}")
     print(f"{symbol} RSI (14d) percentile: {current_percentile:.2f}\n")
+    print(f"{symbol} RSI (14d): {current_rsi:.2f}")
     print(
         "Percentile cutoffs (historical RSI): "
         + ", ".join([f"{k}={v}" for k, v in percentiles.items()])
