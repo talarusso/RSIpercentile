@@ -38,7 +38,10 @@ def get_rsi_percentiles(symbol):
     # Calculate RSI
     rsi = ta.momentum.RSIIndicator(close, window=14).rsi().dropna()
 
-    current_percentile = int(round(rsi.iloc[-1]))
+    # Percentile rank of the *current* RSI value within the historical RSI distribution.
+    # (i.e., % of historical days with RSI <= current RSI)
+    current_rsi = float(rsi.iloc[-1])
+    current_percentile = float((rsi <= current_rsi).mean() * 100)
 
     percentiles = {
         "0.5th": rsi.quantile(0.005).round().astype(int),
@@ -48,7 +51,7 @@ def get_rsi_percentiles(symbol):
         "97.5th": rsi.quantile(0.975).round().astype(int),
     }
 
-    return current_percentile, percentiles
+    return current_rsi, current_percentile, percentiles
 
 
 def _parse_symbol_from_argv(argv):
@@ -69,4 +72,16 @@ def main(argv=None):
     if symbol is None:
         symbol = input("Enter stock ticker: ").upper().strip()
 
-    current_percentile, percentiles = get_rsi_percentiles(symbol)
+    current_rsi, current_percentile, percentiles = get_rsi_percentiles(symbol)
+
+    # Print results
+    print(f"{symbol} RSI (14d): {current_rsi:.2f}")
+    print(f"{symbol} RSI (14d) percentile: {current_percentile:.2f}")
+    print(
+        "Percentile cutoffs (historical RSI): "
+        + ", ".join([f"{k}={v}" for k, v in percentiles.items()])
+    )
+
+
+if __name__ == "__main__":
+    main()
