@@ -1,17 +1,15 @@
 """
 Calculates 14-day RSI
 
-Version 20260307
+Version 20260308
 
 @author: talarusso
 """
 
-import sys
 import yfinance as yf
 import pandas as pd
 from curl_cffi import requests as curl_requests
 import ta
-
 
 def get_rsi_percentiles(symbol):
     session = curl_requests.Session(impersonate="chrome124")
@@ -23,7 +21,7 @@ def get_rsi_percentiles(symbol):
         auto_adjust=False,
         progress=False,
         timeout=10,
-        session=session,
+        session=session
     )
 
     if tickerdata.empty:
@@ -37,9 +35,7 @@ def get_rsi_percentiles(symbol):
 
     # Calculate RSI
     rsi = ta.momentum.RSIIndicator(close, window=14).rsi().dropna()
-
-    # Percentile rank of the *current* RSI value within the historical RSI distribution.
-    # (i.e., % of historical days with RSI <= current RSI)
+    
     current_rsi = float(rsi.iloc[-1])
     current_percentile = float((rsi <= current_rsi).mean() * 100)
 
@@ -58,13 +54,14 @@ def _parse_symbol_from_argv(argv):
     # Usage:
     #   rsi-percentile LMT
     # or:
-    #   python rsi_percentile.py LMT
-    if len(argv) >= 2 and argv[1].strip():
-        return argv[1].upper().strip()
+    #   python -m rsi_percentile LMT
+    if len(argv) >= 2 and str(argv[1]).strip():
+        return str(argv[1]).upper().strip()
     return None
 
 
 def main(argv=None):
+    import sys
     if argv is None:
         argv = sys.argv
 
@@ -74,9 +71,8 @@ def main(argv=None):
 
     current_rsi, current_percentile, percentiles = get_rsi_percentiles(symbol)
 
-    # Print results
     print(f"{symbol} RSI (14d): {current_rsi:.2f}")
-    print(f"{symbol} RSI (14d) percentile: {current_percentile:.2f}")
+    print(f"{symbol} RSI (14d) percentile: {current_percentile:.2f}\n")
     print(
         "Percentile cutoffs (historical RSI): "
         + ", ".join([f"{k}={v}" for k, v in percentiles.items()])
